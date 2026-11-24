@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { createSession, sessionCookieName, sessionCookieOptions } from "@/lib/session";
 import { supabase } from "@/lib/supabaseClient";
 
 export async function POST(request: Request) {
@@ -33,7 +34,12 @@ export async function POST(request: Request) {
     // ส่ง user data กลับ (ไม่ส่ง password กลับ)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _password, ...userWithoutPassword } = data;
-    return NextResponse.json({ user: userWithoutPassword });
+    const response = NextResponse.json(
+      { user: userWithoutPassword },
+      { headers: { "Cache-Control": "no-store" } },
+    );
+    response.cookies.set(sessionCookieName, createSession(String(data.id)), sessionCookieOptions);
+    return response;
   } catch {
     return NextResponse.json(
       { error: "เกิดข้อผิดพลาดในระบบ" },

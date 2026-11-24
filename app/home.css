@@ -1,0 +1,104 @@
+/* Hallmark · v2.0.0 · theme: custom · genre: playful · idea: "start the diary with a meal worth remembering" · vibe: "warm, bright and a little cheeky" · paper: warm cream · accent: lime · faces: Prompt · hero: Thai headline beside a lime-backed pancake photo · nav: wordmark and login · footer: none · posture: restrained */
+/* Hallmark · pre-emit critique: P4 H5 E4 S4 R5 V4 · weakest: S, the photo could read as a café feature, so the copy asks what the visitor ate and opens their own food diary */
+
+.home-header {
+  display: flex;
+  min-height: 4.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--color-soft-line);
+}
+
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 7vw, 3rem);
+  padding-block: clamp(2.75rem, 8vw, 5rem) 3.5rem;
+}
+
+.home-hero-copy {
+  min-width: 0;
+}
+
+.home-header .button,
+.home-hero .button {
+  white-space: nowrap;
+}
+
+.home-hero h1 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(2.75rem, 9.4vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.16;
+  min-width: 0;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.home-hero p {
+  max-width: 36ch;
+  margin-block: 1rem 1.5rem;
+  color: var(--color-muted);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.home-photo {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 1.36;
+  margin-right: 0.5rem;
+  border-radius: 3.25rem 1.25rem 1.25rem 1.25rem;
+  background: var(--color-panel);
+}
+
+.home-photo::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0.625rem -0.5rem -0.5rem 0.625rem;
+  border-radius: inherit;
+  background: var(--color-accent);
+  content: "";
+}
+
+.home-photo img {
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: 43% 52%;
+}
+
+@media (min-width: 48rem) {
+  .home-header {
+    min-height: 5rem;
+  }
+
+  .home-hero {
+    min-block-size: min(44rem, calc(100svh - 5rem));
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(1.75rem, 4.6vw, 4.25rem);
+    padding-block: clamp(3rem, 5.8vw, 5.5rem);
+  }
+
+  .home-hero h1 {
+    font-size: clamp(3.4rem, 7.05vw, 5.75rem);
+  }
+
+  .home-hero p {
+    margin-block: 1.25rem 2rem;
+  }
+
+  .home-photo {
+    aspect-ratio: 1.16;
+    margin-right: 0.75rem;
+    border-radius: 5.5rem 1.75rem 1.75rem 1.75rem;
+  }
+
+  .home-photo::before {
+    inset: 0.75rem -0.75rem -0.75rem 0.75rem;
+  }
+}

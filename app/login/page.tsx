@@ -1,98 +1,75 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import { AccountError, AccountField, AccountFrame, useAccountSubmission } from "@/app/account";
+
+const credentialsError = "อีเมลหรือรหัสผ่านไม่ถูกต้อง ลองตรวจสอบแล้วเข้าสู่ระบบอีกครั้ง";
+const loginError = "เข้าสู่ระบบไม่สำเร็จ โปรดลองอีกครั้ง";
+
+function RegistrationNotice() {
+  const searchParams = useSearchParams();
+  return searchParams.get("registered") === "1" && (
+    <p className="account-notice account-notice-success" role="status">
+      ลงทะเบียนสำเร็จ เข้าสู่ระบบด้วยอีเมลและรหัสผ่านของคุณได้เลย
+    </p>
+  );
+}
+
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const router = useRouter();
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // เรียก API route เพื่อตรวจสอบรหัสผ่านด้วย bcrypt
-    const res = await fetch("/api/auth/login", {
+  const { pending, error, onSubmit, clearError } = useAccountSubmission(async (fields) => {
+    const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({
+        email: fields.get("email"),
+        password: fields.get("password"),
+      }),
     });
 
-    const result = await res.json();
+    if (response.status === 401) return credentialsError;
+    if (!response.ok) return loginError;
 
-    if (!res.ok) {
-      alert(result.error || "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
-      console.log(result.error);
-      return;
-    }
-
+    const result = await response.json();
     router.push("/dashboard/" + result.user.id);
-    console.log("Login form submitted!");
-  };
+  }, loginError);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-white to-blue-50 p-4 text-slate-800 relative overflow-hidden">
-      {/* Decorative background shapes */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-100/50 mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-200/50 mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-
-      <div className="w-full max-w-md rounded-[2rem] bg-white/80 backdrop-blur-xl p-8 shadow-2xl border border-white/50 z-10">
-        <h1 className="mb-6 text-center text-3xl font-extrabold text-blue-600 tracking-tight">
-          เข้าสู่ระบบ
-        </h1>
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label
-              htmlFor="email"
-              className="mb-1.5 block text-sm font-semibold text-slate-700"
-            >
-              อีเมล
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="กรอกอีเมลของคุณ"
-              className="w-full rounded-xl border border-slate-200 bg-white/50 p-3 text-slate-800 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="mb-1.5 block text-sm font-semibold text-slate-700"
-            >
-              รหัสผ่าน
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="กรอกรหัสผ่านของคุณ"
-              className="w-full rounded-xl border border-slate-200 bg-white/50 p-3 text-slate-800 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full mt-2 transform rounded-full bg-blue-600 py-3 font-bold text-white shadow-xl shadow-blue-600/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-blue-600/50 focus:outline-none focus:ring-4 focus:ring-blue-300 active:scale-95"
-          >
-            เข้าสู่ระบบ (Login)
-          </button>
-        </form>
-
-        <div className="mt-8 text-center text-sm text-slate-600">
-          ยังไม่มีบัญชีผู้ใช้?{" "}
-          <Link
-            href="/register"
-            className="font-bold text-blue-600 hover:text-blue-700 hover:underline transition-colors"
-          >
-            ลงทะเบียนที่นี่
-          </Link>
-        </div>
-      </div>
-    </div>
+    <AccountFrame title="เข้าสู่ระบบ" description="กลับไปดูบันทึกมื้ออาหารของคุณ" photo>
+      <Suspense fallback={null}>
+        <RegistrationNotice />
+      </Suspense>
+      <form className="account-form" method="post" onSubmit={onSubmit} onInput={clearError}>
+        <fieldset className="account-fields" disabled={pending}>
+          <AccountField
+            id="email"
+            label="อีเมล"
+            type="email"
+            autoComplete="username"
+            placeholder="name@example.com"
+            invalid={error === credentialsError}
+            required
+          />
+          <AccountField
+            id="password"
+            label="รหัสผ่าน"
+            type="password"
+            autoComplete="current-password"
+            placeholder="กรอกรหัสผ่าน"
+            invalid={error === credentialsError}
+            required
+          />
+        </fieldset>
+        {error && <AccountError>{error}</AccountError>}
+        <button className="button button-primary account-submit" type="submit" disabled={pending}>
+          {pending ? "กำลังเข้าสู่ระบบ…" : "เข้าสู่ระบบ"}
+        </button>
+      </form>
+      <p className="account-alternative">
+        ยังไม่มีบัญชี <Link href="/register">ลงทะเบียน</Link>
+      </p>
+    </AccountFrame>
   );
 }

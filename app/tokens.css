@@ -1,0 +1,23 @@
+:root {
+  --color-canvas: #f8f6eb;
+  --color-panel: #fffdf6;
+  --color-ink: #20291c;
+  --color-muted: #525c4b;
+  --color-accent: #d2ef74;
+  --color-accent-hover: #e2f4a7;
+  --color-accent-ink: #20291c;
+  --color-deep: #263925;
+  --color-deep-ink: #f8f6eb;
+  --color-deep-muted: #c4d0bd;
+  --color-subtle: #ecefdf;
+  --color-line: #a7ad99;
+  --color-soft-line: #dddfd0;
+  --color-focus: #476710;
+  --color-danger: #8b302d;
+  --color-danger-surface: #f9ebe4;
+  --color-scrim: #20291c66;
+  --font-body: var(--font-prompt), system-ui, sans-serif;
+  --layout-width: 72.5rem;
+  --radius-control: 0.875rem;
+  --radius-panel: 1.5rem;
+}

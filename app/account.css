@@ -1,0 +1,392 @@
+/* Hallmark v2.0.0 · theme: custom · genre: playful · shape: app screen · signature: direct access to the food diary */
+/* Critique: The wide layout lets the form lead while the meal photo supplies context. On a phone, the first field follows the introduction. */
+
+.account-header {
+  border-block-end: 1px solid var(--color-soft-line);
+}
+
+.account-header .site-shell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  min-block-size: 68px;
+}
+
+.account-layout.site-shell {
+  display: grid;
+  align-items: start;
+  gap: 1.5rem;
+  padding-block: 2rem 3rem;
+  max-inline-size: 32rem;
+}
+
+.account-layout-split.site-shell {
+  max-inline-size: 1000px;
+}
+
+.account-intro,
+.account-panel {
+  min-inline-size: 0;
+}
+
+.account-intro h1 {
+  min-width: 0;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 2.125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.account-intro p {
+  margin: .65rem 0 0;
+  color: var(--color-muted);
+}
+
+.account-photo {
+  display: none;
+}
+
+.account-panel {
+  grid-column: 1;
+  padding: 1.125rem;
+  color: var(--color-ink);
+  background-color: var(--color-panel);
+  border: 1px solid var(--color-soft-line);
+  border-radius: 1.5rem;
+}
+
+.account-form,
+.account-fields,
+.account-loading,
+.account-skeleton {
+  display: grid;
+  gap: 1rem;
+}
+
+.account-fields,
+.account-gender {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.account-field {
+  display: grid;
+  gap: .375rem;
+}
+
+.account-field label,
+.account-gender legend,
+.account-avatar-control p:first-child {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.account-field p,
+.account-avatar-control span,
+.account-avatar-filename {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: .875rem;
+  font-weight: 400;
+}
+
+.account-input-wrap {
+  position: relative;
+  display: grid;
+}
+
+.account-input {
+  min-inline-size: 0;
+  min-block-size: 46px;
+  padding: .625rem .875rem;
+  border: 1px solid var(--color-muted);
+  border-radius: .75rem;
+  color: var(--color-ink);
+  background-color: var(--color-panel);
+  font: inherit;
+}
+
+.account-input::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
+}
+
+.account-input-password {
+  padding-inline-end: 3.125rem;
+}
+
+.account-input-password::-ms-reveal {
+  display: none;
+}
+
+.account-password-toggle {
+  position: absolute;
+  inset-block: 1px;
+  inset-inline-end: 1px;
+  display: grid;
+  min-inline-size: 44px;
+  place-items: center;
+  border-radius: .7rem;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.account-password-toggle:hover:not(:disabled) {
+  color: var(--color-ink);
+  background-color: var(--color-subtle);
+}
+
+.account-password-toggle:disabled {
+  cursor: not-allowed;
+}
+
+.account-password-toggle svg {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+
+.account-input:focus-visible {
+  border-color: var(--color-focus);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.account-input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.account-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-block-start: .375rem;
+}
+
+.account-options label,
+.account-avatar-control label {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-block-size: 44px;
+  padding: .45rem .8rem;
+  border: 1px solid var(--color-line);
+  border-radius: .75rem;
+  color: var(--color-ink);
+  background-color: var(--color-panel);
+  font-size: .9375rem;
+  cursor: pointer;
+}
+
+.account-options input {
+  inline-size: 1.0625rem;
+  block-size: 1.0625rem;
+  margin: 0;
+  accent-color: var(--color-accent-ink);
+}
+
+.account-options label:has(input:checked) {
+  border-color: var(--color-accent-ink);
+  background-color: var(--color-subtle);
+}
+
+.account-avatar {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  align-items: center;
+  gap: .875rem;
+  padding: .875rem;
+  border: 1px dashed var(--color-line);
+  border-radius: .875rem;
+  background-color: var(--color-subtle);
+}
+
+.account-avatar-preview {
+  position: relative;
+  inline-size: 68px;
+  block-size: 68px;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  background-color: var(--color-panel);
+  overflow: clip;
+}
+
+.account-avatar-preview img,
+.account-photo img {
+  object-fit: cover;
+}
+
+.account-avatar-control {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: .375rem;
+  min-inline-size: 0;
+}
+
+.account-avatar-control p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.account-avatar-control input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+}
+
+.account-avatar-control input:focus-visible + label,
+.account-options label:has(input:focus-visible),
+.account-alternative a:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.account-options input:focus-visible {
+  outline: none;
+}
+
+.account-options label:has(input:not(:disabled)):active,
+.account-avatar-control input:not(:disabled) + label:active {
+  background-color: var(--color-canvas);
+}
+
+.account-fields:disabled {
+  color: var(--color-muted);
+  background-color: var(--color-panel);
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+.account-fields:disabled input,
+.account-fields:disabled label,
+.account-form .button:disabled {
+  cursor: not-allowed;
+}
+
+.account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .625rem;
+}
+
+.account-actions .button {
+  flex: 1 1 auto;
+}
+
+.account-submit {
+  inline-size: 100%;
+}
+
+.account-notice {
+  margin: 0;
+  padding: .75rem .875rem;
+  border-radius: .75rem;
+  overflow-wrap: anywhere;
+}
+
+.account-notice-error {
+  color: var(--color-danger);
+  background-color: var(--color-danger-surface);
+}
+
+.account-notice-success {
+  margin-block-end: 1rem;
+  color: var(--color-ink);
+  background-color: var(--color-subtle);
+  border: 1px solid var(--color-line);
+}
+
+.account-alternative {
+  margin: 1rem 0 0;
+  padding-block-start: .625rem;
+  border-block-start: 1px solid var(--color-soft-line);
+  color: var(--color-muted);
+  text-align: center;
+  font-size: .9375rem;
+}
+
+.account-alternative a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  padding-inline: .375rem;
+  color: var(--color-ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: .15em;
+}
+
+.account-loading p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.account-skeleton span {
+  block-size: 46px;
+  border-radius: .75rem;
+  background-color: var(--color-subtle);
+}
+
+@media (hover: hover) {
+  .account-input:not(:disabled):hover {
+    background-color: var(--color-canvas);
+  }
+
+  .account-avatar-control input:not(:disabled) + label:hover,
+  .account-options label:has(input:not(:disabled)):hover {
+    border-color: var(--color-muted);
+  }
+
+  .account-alternative a:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+@media (min-width: 760px) {
+  .account-header .site-shell {
+    min-block-size: 78px;
+  }
+
+  .account-layout-split.site-shell {
+    grid-template-columns: minmax(0, .86fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    padding-block: 4.75rem;
+  }
+
+  .account-layout-split .account-intro {
+    padding-block-start: 1.5rem;
+  }
+
+  .account-intro h1 {
+    font-size: 2.875rem;
+  }
+
+  .account-layout-split .account-intro p {
+    max-inline-size: 32ch;
+  }
+
+  .account-photo {
+    display: block;
+    position: relative;
+    max-inline-size: 360px;
+    aspect-ratio: 4 / 3;
+    margin-block-start: 1.75rem;
+    border-radius: 1rem 1rem 3rem 1rem;
+    overflow: clip;
+  }
+
+  .account-panel {
+    padding: 2rem;
+  }
+
+  .account-layout-split .account-panel {
+    grid-column: 2;
+  }
+}
